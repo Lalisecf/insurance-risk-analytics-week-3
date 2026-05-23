@@ -26,4 +26,3 @@ if __name__ == "__main__":
     cleaned_df.to_csv("data/insurance_data_cleaned.csv", index=False)
 
     print("Cleaned dataset saved.")
-    
