@@ -17,7 +17,6 @@ The project follows a complete analytics workflow including:
 - Machine Learning modeling
 - Business-focused recommendations
 
-
 ---
 
 # Business Problem
