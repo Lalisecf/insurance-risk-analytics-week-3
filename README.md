@@ -370,6 +370,281 @@ The project supports reproducible workflows using:
 
 ---
 
+---
+
+# Task 2 — Data Version Control (DVC)
+
+## Objective
+
+Establish a reproducible and auditable data pipeline using DVC (Data Version Control).
+
+This ensures:
+- Dataset reproducibility
+- Pipeline traceability
+- Versioned data management
+- Reliable collaboration workflows
+- Regulatory and audit compliance readiness
+
+---
+
+# DVC Workflow
+
+## 1. Initialize DVC
+
+```bash
+dvc init
+```
+
+This initializes DVC in the project and creates:
+- `.dvc/`
+- `.dvcignore`
+
+---
+
+## 2. Configure Local Remote Storage
+
+A local storage directory was configured outside the Git repository.
+
+```bash
+mkdir C:\dvc-storage
+```
+
+Add the remote:
+
+```bash
+dvc remote add -d localstorage C:\dvc-storage
+```
+
+Verify:
+
+```bash
+dvc remote list
+```
+
+---
+
+## 3. Track Dataset with DVC
+
+The raw insurance dataset was added to DVC tracking.
+
+```bash
+dvc add data/MachineLearningRating_v3.txt
+```
+
+This generated:
+
+```text
+data/MachineLearningRating_v3.txt.dvc
+```
+
+The actual dataset is excluded from Git and stored through DVC.
+
+---
+
+## 4. Data Cleaning Pipeline
+
+A reproducible pipeline was created using:
+
+```text
+dvc.yaml
+```
+
+Pipeline stage:
+
+```yaml
+stages:
+  clean_data:
+    cmd: python src/data_loader.py
+    deps:
+      - src/data_loader.py
+      - data/MachineLearningRating_v3.txt
+    outs:
+      - data/insurance_data_cleaned.csv
+```
+
+---
+
+## 5. Reproduce Pipeline
+
+The entire data pipeline can be reproduced using:
+
+```bash
+dvc repro
+```
+
+This automatically:
+- detects dependency changes
+- reruns affected stages
+- updates outputs
+- updates `dvc.lock`
+
+---
+
+## 6. Push Data to Remote Storage
+
+Push tracked data to local DVC remote:
+
+```bash
+dvc push
+```
+
+---
+
+## 7. Pull Data
+
+Restore datasets from remote storage:
+
+```bash
+dvc pull
+```
+
+---
+
+# Reproducibility Workflow
+
+To fully reproduce the project:
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Lalisecf/insurance-risk-analytics-week-3.git
+```
+
+## Navigate to Project
+
+```bash
+cd insurance-risk-analytics-week-3
+```
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Pull DVC Data
+
+```bash
+dvc pull
+```
+
+## Reproduce Entire Pipeline
+
+```bash
+dvc repro
+```
+
+---
+
+# DVC Benefits in This Project
+
+Using DVC provides:
+
+- Versioned datasets
+- Reproducible experiments
+- Pipeline automation
+- Safer collaboration
+- Large file management outside Git
+- Easier auditing and rollback
+
+This is especially important in:
+- Insurance analytics
+- Financial systems
+- Machine learning pipelines
+- Regulatory environments
+
+---
+
+# Task 2 Deliverables Completed
+
+## DVC Setup
+- DVC installed
+- DVC initialized
+- Local remote storage configured
+
+## Dataset Tracking
+- Raw dataset tracked
+- Cleaned dataset versioned
+- Data pushed to remote storage
+
+## Pipeline
+- `dvc.yaml` created
+- `dvc.lock` generated
+- `dvc repro` tested successfully
+
+## Documentation
+- README updated with reproducibility instructions
+
+---
+
+# Expected Project Structure After Task 2
+
+```bash
+insurance-risk-analytics/
+├── .dvc/
+├── .github/
+├── data/
+│   ├── MachineLearningRating_v3.txt.dvc
+│   └── insurance_data_cleaned.csv
+├── notebooks/
+│   └── 01_eda.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── data_loader.py
+│   └── eda_utils.py
+├── reports/
+├── tests/
+├── dvc.yaml
+├── dvc.lock
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# Final Task-2 Git Commands
+
+## Stage Changes
+
+```bash
+git add .
+```
+
+## Commit
+
+```bash
+git commit -m "docs: add DVC workflow and reproduction instructions"
+```
+
+## Push
+
+```bash
+git push origin task-2
+```
+
+---
+
+# Pull Request
+
+## PR Title
+
+```text
+Task 2: Data Version Control setup and reproducible pipeline
+```
+
+## PR Description
+
+```text
+Completed:
+- DVC initialization
+- Local remote storage setup
+- Dataset tracking with DVC
+- Cleaned dataset versioning
+- Reproducible data pipeline
+- README reproduction instructions
+```
+
 # Future Work
 
 Upcoming tasks include:
