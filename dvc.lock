@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  clean_data:
+    cmd: python src/data_loader.py
+    deps:
+    - path: data/MachineLearningRating_v3.txt
+      hash: md5
+      md5: f6b7009b68ae21372b7deca9307fbb23
+      size: 529363713
+    - path: src/data_loader.py
+      hash: md5
+      md5: 9a761a5d33e3ba05f948b0f2ca97ec96
+      size: 616
+    outs:
+    - path: data/insurance_data_cleaned.csv
+      hash: md5
+      md5: 6c994615fc7c3cfc981123935399ae60
+      size: 534566128
