@@ -644,17 +644,470 @@ Completed:
 - Reproducible data pipeline
 - README reproduction instructions
 ```
+# Task 3 — A/B Hypothesis Testing
 
-# Future Work
+## Objective
 
-Upcoming tasks include:
-- Hypothesis testing
-- Statistical validation
-- Predictive modeling
-- Risk-based pricing models
-- SHAP interpretability analysis
+The objective of Task 3 was to statistically validate key insurance risk hypotheses and identify whether significant differences exist across provinces, zip codes, and gender categories.
+
+This analysis helps ACIS:
+
+* Identify high-risk customer segments
+* Improve pricing strategies
+* Support evidence-based business decisions
+* Enhance profitability through risk segmentation
 
 ---
+
+# Risk Metrics Used
+
+## Claim Frequency
+
+Measures the proportion of policies with at least one claim.
+
+```python
+Claim Frequency = Number of Policies with Claims / Total Policies
+```
+
+---
+
+## Claim Severity
+
+Measures the average claim amount when a claim occurs.
+
+```python
+Claim Severity = Average(TotalClaims)
+```
+
+---
+
+## Margin
+
+Measures policy profitability.
+
+```python
+Margin = TotalPremium - TotalClaims
+```
+
+---
+
+# Null Hypotheses Tested
+
+## H₀₁: No Risk Difference Across Provinces
+
+Tested whether claim severity differs significantly across provinces.
+
+---
+
+## H₀₂: No Risk Difference Between Postal Codes
+
+Tested whether claim severity differs significantly between zip/postal codes.
+
+---
+
+## H₀₃: No Margin Difference Between Postal Codes
+
+Tested whether profitability differs significantly across postal codes.
+
+---
+
+## H₀₄: No Risk Difference Between Women and Men
+
+Tested whether gender significantly impacts claim severity.
+
+---
+
+# Statistical Tests Used
+
+Depending on the KPI and variable type, the following statistical tests were applied:
+
+* Independent t-test
+* Z-test
+* Chi-squared test
+
+### Significance Level
+
+```python
+alpha = 0.05
+```
+
+Decision Rule:
+
+* Reject H₀ if p-value < 0.05
+* Fail to reject H₀ if p-value ≥ 0.05
+
+---
+
+# Hypothesis Testing Workflow
+
+## 1. Data Segmentation
+
+The data was grouped into:
+
+* Control Group (Baseline)
+* Test Group (Comparison)
+
+Examples:
+
+* Gauteng vs Western Cape
+* Male vs Female
+* High-risk vs low-risk postal codes
+
+---
+
+## 2. KPI Selection
+
+Selected KPIs included:
+
+* Claim Frequency
+* Claim Severity
+* Margin
+
+---
+
+## 3. Statistical Validation
+
+For each hypothesis:
+
+* p-values were calculated
+* statistical significance evaluated
+* business interpretation documented
+
+---
+
+# Key Findings
+
+## Provincial Risk Differences
+
+Significant claim severity differences were identified across provinces.
+
+### Key Insight
+
+Gauteng and KwaZulu-Natal exhibited higher average claim severity and loss ratios compared to lower-risk provinces such as Northern Cape and Limpopo.
+
+### Business Impact
+
+Regional premium adjustments may improve pricing accuracy and profitability.
+
+---
+
+## Postal Code Risk Differences
+
+Certain postal codes showed significantly higher claim frequency and severity.
+
+### Business Impact
+
+Postal-code-level risk segmentation can improve premium optimization and fraud detection.
+
+---
+
+## Margin Differences
+
+Significant profitability variation existed across geographic areas.
+
+### Key Insight
+
+Some regions generated high premiums but also experienced disproportionately high claims.
+
+### Business Impact
+
+Margin analysis helps identify unprofitable customer segments.
+
+---
+
+## Gender Risk Analysis
+
+Gender-based differences showed weaker predictive influence compared to geographic and vehicle-related variables.
+
+### Key Insight
+
+Vehicle and policy characteristics were stronger predictors of risk than demographic variables.
+
+---
+
+# Business Recommendations
+
+Based on the statistical testing results:
+
+* Implement province-based pricing adjustments
+* Introduce postal-code-level risk segmentation
+* Improve underwriting strategies for high-risk regions
+* Focus marketing campaigns on lower-risk customer segments
+* Use data-driven pricing rather than uniform premium structures
+
+---
+
+# Deliverables Completed
+
+## Notebook
+
+* `02_hypothesis_testing.ipynb`
+
+## Reusable Functions
+
+* `src/hypothesis_tests.py`
+
+## Statistical Outputs
+
+* p-values
+* test statistics
+* hypothesis decisions
+* business interpretations
+
+---
+
+# Key Insights from Task 3
+
+## Insight 1 — Geographic Risk Strongly Influences Claims
+
+Regional differences significantly impact insurance profitability.
+
+---
+
+## Insight 2 — Pricing Inefficiencies Exist
+
+Some customer groups pay premiums that do not accurately reflect their risk exposure.
+
+---
+
+## Insight 3 — Data-Driven Segmentation Improves Profitability
+
+Statistical testing supports the use of dynamic pricing strategies instead of generalized pricing models.
+
+---
+
+# Task 4 — Statistical Modeling & Risk-Based Pricing
+
+## Objective
+
+The objective of Task 4 was to develop predictive machine learning models for:
+
+* Claim severity prediction
+* Claim probability prediction
+* Risk-based premium optimization
+
+The models support ACIS in implementing data-driven insurance pricing strategies.
+
+---
+
+# Modeling Goals
+
+## 1. Claim Severity Prediction
+
+Predict the expected insurance claim amount (`TotalClaims`) for policies with claims.
+
+### Target Variable
+
+```python
+TotalClaims
+```
+
+### Evaluation Metrics
+
+* RMSE
+* R² Score
+
+---
+
+## 2. Premium Optimization
+
+Develop a dynamic premium pricing framework using:
+
+```python
+Premium =
+(P(Claim) × Predicted Severity)
++ Expense Loading
++ Profit Margin
+```
+
+---
+
+# Feature Engineering
+
+Several derived features were created.
+
+## Vehicle Age
+
+```python
+VehicleAge = 2015 - RegistrationYear
+```
+
+## Margin
+
+```python
+Margin = TotalPremium - TotalClaims
+```
+
+## Claim Indicator
+
+```python
+HasClaim = 1 if TotalClaims > 0 else 0
+```
+
+---
+
+# Machine Learning Models Implemented
+
+## Linear Regression
+
+Used as the baseline regression model.
+
+---
+
+## Random Forest
+
+Used for nonlinear regression and classification tasks.
+
+---
+
+## XGBoost
+
+Used as the primary advanced boosting model for claim severity prediction.
+
+---
+
+# Model Evaluation Results
+
+| Model             | RMSE     | R² Score |
+| ----------------- | -------- | -------- |
+| Linear Regression | 36972.78 | 0.150    |
+| Random Forest     | 36373.26 | 0.177    |
+| XGBoost           | 36008.02 | 0.194    |
+
+---
+
+# Best Model
+
+## XGBoost
+
+XGBoost achieved:
+
+* Lowest RMSE
+* Highest R² score
+
+This indicates that XGBoost captured complex nonlinear insurance risk relationships more effectively than the other models.
+
+---
+
+# Model Interpretability
+
+SHAP (SHapley Additive Explanations) was used to interpret the best-performing model.
+
+---
+
+# Top Influential Features
+
+The most important features included:
+
+* SumInsured
+* CalculatedPremiumPerTerm
+* VehicleAge
+* VehicleType
+* Geographic variables
+* Vehicle characteristics
+
+---
+
+# SHAP Insights
+
+## Key Findings
+
+* Older vehicles were associated with higher predicted claim amounts.
+* Higher insured values significantly increased predicted claim severity.
+* Vehicle and policy-related variables had stronger predictive influence than demographic variables.
+
+---
+
+# Premium Optimization Framework
+
+A dynamic pricing framework was implemented using:
+
+```python
+Premium =
+(P(Claim) × Predicted Severity)
++ Expense Loading
++ Profit Margin
+```
+
+Where:
+
+* Claim probability was predicted using a Random Forest Classifier
+* Claim severity was predicted using the XGBoost model
+
+---
+
+# Business Recommendations
+
+Based on the modeling results:
+
+* Adopt machine learning-based pricing strategies
+* Apply risk-adjusted premiums for high-risk customers
+* Offer competitive pricing for low-risk customer groups
+* Continuously retrain models as new insurance data becomes available
+* Incorporate geographic and vehicle-level risk segmentation into underwriting policies
+
+---
+
+# Key Insights from Task 4
+
+## Insight 1 — Tree-Based Models Perform Better
+
+Random Forest and XGBoost outperformed Linear Regression, indicating strong nonlinear relationships within insurance claims data.
+
+---
+
+## Insight 2 — Vehicle and Policy Features Drive Risk
+
+Vehicle age, insured value, and policy characteristics strongly influence claim severity.
+
+---
+
+## Insight 3 — Dynamic Pricing Improves Profitability
+
+Risk-based premium optimization allows ACIS to better align premiums with expected customer risk.
+
+---
+
+# Deliverables Completed
+
+## Notebook
+
+* `03_modeling.ipynb`
+
+## Reusable Module
+
+* `src/modeling.py`
+
+## Model Outputs
+
+* Regression metrics
+* Classification metrics
+* SHAP summary plots
+* Feature importance visualizations
+* Premium optimization calculations
+
+---
+
+# Future Improvements
+
+Potential future enhancements include:
+
+* Hyperparameter tuning
+* Additional behavioral features
+* Time-series claim forecasting
+* Advanced ensemble learning techniques
+* Real-time pricing API deployment
+* Integration of external risk data sources
+
+# Conclusion
+
+This project successfully demonstrated how data analytics, statistical testing, and machine learning can support risk-based decision-making in the insurance industry.
+
+Through exploratory analysis, hypothesis testing, predictive modeling, and premium optimization, the project identified key drivers of insurance risk and profitability.
+
+The results showed that tree-based machine learning models such as Random Forest and XGBoost outperform traditional linear approaches for insurance claim prediction.
+
+The developed pricing framework enables AlphaCare Insurance Solutions (ACIS) to move toward more accurate, dynamic, and data-driven premium strategies.
 
 # Author
 
